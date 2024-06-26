@@ -70,11 +70,14 @@ body {
 
 .dropdown-container {
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .dropdown-container select {
-    margin: 1rem auto;
-    width: 100%;
+    margin: 1rem;
+    width: 90%;
     background-color: white;
     border: 1px solid #707070;
     color: #707070;
@@ -98,7 +101,7 @@ body {
 }
 
 .stats-container .stat-box {
-    width: 100%;
+    width: 90%;
     max-width: 400px;
     padding: 1rem;
     background-color: white;
