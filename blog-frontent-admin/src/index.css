@@ -1,0 +1,299 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+a {
+    color: inherit;
+}
+
+html, body, .root {
+    width: 100vw;
+    min-height: 100vh;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    overflow-x: hidden;
+}
+
+.app {
+    width: 100%;
+    height: 100vh;  
+    background-color: #f5f5f5;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 1rem;
+
+}
+
+.btn {
+    padding: 0.7rem;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid #f55e18;
+    color: #f55e18;
+    cursor: pointer;
+}
+
+.btn:hover, .btn:active {
+    background-color: #f55e18;
+    color: white;
+
+}
+
+.btn-2 {
+    background-color: transparent;
+    color: #707070;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin: 0 0.5rem;
+}
+
+.btn-2:hover {
+    color: #f55e18;
+}
+
+.btn-2.active {
+    color: #f55e18;
+}
+
+.dropdown-container {
+    width: 100%;
+}
+
+.dropdown-container select {
+    margin: 1rem auto;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #707070;
+    color: #707070;
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 10px;
+}
+  
+  select option {
+    background-color: white;
+    color: #707070;
+}
+
+.stats-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.stats-container .stat-box {
+    width: 100%;
+    max-width: 400px;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.posts-container {
+    margin: 1rem;
+    background-color: white;
+    padding: 1rem;
+}
+
+.create-post-container {
+    width: 100%;
+    margin: 1rem auto;
+    background-color: white;
+    padding: 1rem;
+}
+
+.create-post-container .control-btns {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.edit-box {
+    margin: 1rem auto;
+    background-color: white;
+}
+
+.edit-box .custom-upload {
+    padding: 0.5rem;
+    border: 1px solid #707070;
+    border-radius: 5px;
+}
+
+.edit-box input[type="file"] {
+    display: none;
+}
+
+.edit-box .input-box {
+    width: 100%;
+    margin: 2rem auto;
+}
+
+.input-box.editor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-box input {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+}
+
+.edit-box input#post-title {
+    font-size: 24px;
+    font-weight: 900;
+}
+
+.cover-image-box {
+    width: 5rem;
+    margin: 1rem ;
+}
+
+.cover-image-box-preview {
+    border-radius: 5px;
+    margin: 1rem auto;
+}
+
+.cover-image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.cover-image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+
+
+span.remove {
+    border: 1px solid #e8122f;
+    padding: 0.5rem;
+    border-radius: 5px;
+    color: #e8122f;
+    margin: 0 1rem;
+}
+
+.input-box input#tags  {
+    font-size: 1rem;
+}
+
+.input-box textarea {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    outline: none;
+    font-size: 1.5rem;
+}
+
+.edit-box .btn {
+    margin: 0 1rem;
+}
+
+.preview-box h1 {
+    font-size: 50px;
+}
+
+.preview-box .post-content-preview {
+    margin: 2rem 0;
+}
+
+.tags {
+    margin: 1rem 0;
+}
+
+.tag-item {
+    margin: 1rem 1rem 0 0;
+    border: 1px solid #f55e18;
+    background-color: #f55e18;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 10px;
+}
+
+.nav-links {
+    list-style-type: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin: 0 1rem;
+}
+
+.error {
+    color: #e8122f;
+}
+
+
+.login-container {
+    width: 100%;
+    height: 100%;
+    background: url(/form-bg.jpg);
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container form {
+    width: 300px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 1rem;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-container form h2  {
+    margin-bottom: 1rem;
+}
+
+.login-container .input-box {
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.login-container .input-box input {
+    width: 100%;
+    padding: 0.5rem;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #707070;
+}
+
+.btn-red {
+    padding: 0.4rem;
+    color: #e8122f;
+    border: 1px solid #e8122f;
+}
+
+.btn-red:hover {
+    background-color: #e8122f;
+}
