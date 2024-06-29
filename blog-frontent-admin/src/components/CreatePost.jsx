@@ -1,18 +1,22 @@
 import { useState } from "react"
+import axios from 'axios';
 import { Editor } from '@tinymce/tinymce-react';
+import { useNavigate } from 'react-router-dom';
 
 export default function CreatePost() {
     const [postContent, setPostContent] = useState({
         title: "",
         content: "",
         tags: [],
-        coverImage: null
+        banner_image: null
     })
     const [mode, setMode] = useState("edit")
 
     const handleModeChange = (mode) => {
         setMode(mode)
     }
+
+    const navigate = useNavigate()
 
     const handleImageUpload = (e) => {
         const file = e.target.files[0]
@@ -21,7 +25,7 @@ export default function CreatePost() {
             const reader = new FileReader()
 
             reader.onload = () => {
-                setPostContent({...postContent, coverImage: reader.result})
+                setPostContent({...postContent, banner_image: reader.result})
             }
 
             reader.readAsDataURL(file)
@@ -33,6 +37,29 @@ export default function CreatePost() {
         setPostContent({...postContent, tags: tags})
     }
 
+    const handlePostSave = async () => {
+        try {
+            const token = localStorage.getItem("token");
+            console.log('Sending post data:', postContent);
+            const response = await axios.post(
+                "http://localhost:3000/api/posts",
+                postContent,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }
+            );
+
+            console.log("Response: ", response)
+
+            //  Navigate to posts page
+            navigate('/posts')
+
+        } catch (err) {
+            console.log("Error saving post", err)
+        }
+    }
     return (
         <div className="create-post-container">
             <div className="control-btns">
@@ -42,10 +69,10 @@ export default function CreatePost() {
             {mode === "edit" && 
                 <div className="edit-box">
                     <div className="cover-image-box">
-                        {postContent.coverImage && <img src={postContent.coverImage} alt="cover" />}
+                        {postContent.banner_image && <img src={postContent.banner_image} alt="cover" />}
                     </div>
                     <label htmlFor="cover-image-upload" className="custom-upload">
-                        {postContent.coverImage ? "Change" : "Upload Cover Image"}
+                        {postContent.banner_image ? "Change" : "Upload Cover Image"}
                         <input 
                             id="cover-image-upload" 
                             type="file" 
@@ -53,7 +80,7 @@ export default function CreatePost() {
                             onChange={handleImageUpload}
                         />
                     </label>
-                    {postContent.coverImage ? <span className="remove" onClick={() => setPostContent({...postContent, coverImage: null})}>Remove</span> : ""}
+                    {postContent.banner_image ? <span className="remove" onClick={() => setPostContent({...postContent, banner_image: null})}>Remove</span> : ""}
                     <div className="input-box">
                         <input id="post-title" 
                             type="text" 
@@ -84,7 +111,7 @@ export default function CreatePost() {
                         />
                     </div>
                     <div className="btns">
-                        <button className="btn">Save Draft</button>
+                        <button className="btn" onClick={handlePostSave}>Save Draft</button>
                         <button className="btn">Publish</button>
                     </div>
                 </div>
@@ -92,8 +119,8 @@ export default function CreatePost() {
             {
                 mode == "preview" &&
                 <div className="preview-box">
-                    <div className="cover-image-box-preview" style={{ backgroundImage: `url(${postContent.coverImage})`, backgroundSize: 'cover', backgroundPosition: 'center', height: '200px' }}>
-                        {/* {postContent.coverImage && <img src={postContent.coverImage} alt="cover" />} */}
+                    <div className="cover-image-box-preview" style={{ backgroundImage: `url(${postContent.banner_image})`, backgroundSize: 'cover', backgroundPosition: 'center', height: '200px' }}>
+                        {/* {postContent.banner_image && <img src={postContent.banner_image} alt="cover" />} */}
                     </div>
                     <h1>{postContent.title}</h1>
                     <div className="tags">

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
 
+    const API_URL = JSON.stringify(import.meta.env["VITE_BACKEND_URL"])
     const [user, setUser] = useState({
         username: "",
         password: "",
@@ -16,7 +17,7 @@ export default function Login() {
         e.preventDefault();
 
         try {
-            const response = await axios.post("http://localhost:3000/api/admin/login", user)
+            const response = await axios.post(`http://localhost:3000/api/admin/login`, user)
             const { token } = response.data
 
             //  Save the token to local storage
@@ -27,6 +28,8 @@ export default function Login() {
         } catch (err) {
             if (err.response && err.response.status == 403) {
                 setError("Access Denied. Admins only")
+            } else if (err.response && err.response.status == 400) {
+                setError("Invalid Credentials")
             } else {
                 setError(err.message)
             }

@@ -1,9 +1,9 @@
+
 import { useState } from "react"
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 export default function SignUp() {
-
     const [user, setUser] = useState({
         username: "",
         password: "",
@@ -17,7 +17,7 @@ export default function SignUp() {
         e.preventDefault();
 
         try {
-            const response = await axios.post("http://localhost:3000/api/users/register", user)
+            const response = await axios.post(`http://localhost:3000/api/users/register`, user)
 
             //  Redirect to the dashboard
             navigate('/login')
@@ -30,7 +30,7 @@ export default function SignUp() {
         <div className="login-container">
             <form method="POST" className="login-form" onSubmit={handleSubmit}>
             <h2>Sign Up</h2>
-            {error  && <p className="error">{error}</p>}
+            {error  && <p className="error">{error.message}</p>}
             <div className="input-box">
                 <label htmlFor="username"></label>
                 <input 
