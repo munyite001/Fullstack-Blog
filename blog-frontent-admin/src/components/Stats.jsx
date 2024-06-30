@@ -30,7 +30,6 @@ const Stats = () => {
         fetchStats();
     }, []); // Empty dependency array means this effect runs only once on mount
     
-    console.log(stats);
 
     if (loading) {
         return <p>Loading...</p>; // Optional loading indicator

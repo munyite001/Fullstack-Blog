@@ -1,23 +1,59 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import axios from 'axios';
 import { Editor } from '@tinymce/tinymce-react';
-import { useNavigate } from 'react-router-dom';
+import { json, useNavigate } from 'react-router-dom';
 
 export default function CreatePost() {
+
+    const [tags, setTags] = useState(null)
+
+    //  Fetch all tags
+    useEffect(() => {
+        const fetchTags = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                const response = await axios.get(
+                    "http://localhost:3000/api/tags",
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    }
+                );
+                const tagsData = response.data
+                console.log('Tags: ', tagsData)
+                setTags(tagsData)
+
+            } catch (err) {
+                console.log("Error Fetching tags", err)
+            }
+        };
+
+        fetchTags();
+
+    }, [])
+
+    //  Post Content
     const [postContent, setPostContent] = useState({
         title: "",
         content: "",
         tags: [],
         banner_image: null
     })
+
+    //  Mode: Edit or Preview
     const [mode, setMode] = useState("edit")
+
 
     const handleModeChange = (mode) => {
         setMode(mode)
     }
 
+    
     const navigate = useNavigate()
 
+
+    //  Functionality to upload images
     const handleImageUpload = (e) => {
         const file = e.target.files[0]
 
@@ -33,9 +69,13 @@ export default function CreatePost() {
     }
 
     const handleTagsChange = (e) => {
-        const tags = e.target.value.split(",").map(tag => tag.trim())
-        setPostContent({...postContent, tags: tags})
-    }
+        const inputTags = e.target.value.split(",").map(tag => tag.trim());
+        const tagIds = inputTags.map(tagName => {
+            const tag = tags.find(t => t.name === tagName);
+            return tag ? tag._id : null;
+        }).filter(tagId => tagId !== null);
+        setPostContent({ ...postContent, tags: tagIds });
+    };
 
     const handlePostSave = async () => {
         try {
@@ -92,7 +132,10 @@ export default function CreatePost() {
                     <div className="input-box">
                         <input 
                             type="text" id="tags"
-                            value={postContent.tags}
+                            value={postContent.tags.map(tagId => {
+                                const tag = tags.find(t => t._id === tagId);
+                                return tag ? tag.name : '';
+                            }).join(', ')}
                             onChange={handleTagsChange}
                             placeholder="Add tags separated by commas"
                         />
@@ -124,9 +167,10 @@ export default function CreatePost() {
                     </div>
                     <h1>{postContent.title}</h1>
                     <div className="tags">
-                        {postContent.tags.map((tag, index) => (
-                            <span key={index} className="tag-item">{tag}</span>
-                        ))}
+                        {postContent.tags.map((tagId, index) => {
+                            const tag = tags.find(t => t._id === tagId);
+                            return tag ? <span key={index} className="tag-item">{tag.name}</span> : null;
+                        })}
                     </div>
                     <div dangerouslySetInnerHTML={{__html: postContent.content}} className="post-content-preview"></div>
                 </div>

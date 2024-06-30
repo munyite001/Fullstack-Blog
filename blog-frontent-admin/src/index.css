@@ -115,6 +115,14 @@ body {
     padding: 1rem;
 }
 
+.posts-list {
+    margin: 1rem;
+}
+
+.posts-list li {
+    color: #3468a4;
+}
+
 .create-post-container {
     width: 100%;
     margin: 1rem auto;
