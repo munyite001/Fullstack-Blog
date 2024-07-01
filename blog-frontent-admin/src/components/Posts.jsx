@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios"
 import Stats from "./Stats"
 
@@ -7,6 +8,8 @@ export default function Posts() {
     const [posts, setPosts] = useState(null)
     const [loading, setLoading] = useState(true)
 
+
+    const navigate = useNavigate()
 
     //  Fetch all Posts
     useEffect(() => {
@@ -32,6 +35,10 @@ export default function Posts() {
 
         fetchAllPosts()
     }, [])
+
+    const handleEdit = (id) => {
+        navigate(`/posts/edit/${id}`)
+    }
     
     return (
         <>
@@ -46,6 +53,10 @@ export default function Posts() {
                         {posts.map((post) => 
                             <div className="post-item" key={post._id}>
                                 <li>{post.title}</li>
+                                <div className="post-btns">
+                                    <button className="btn-2" onClick={() => handleEdit(post._id)}>Edit</button>
+                                    <button className="btn-2">Delete</button>
+                                </div>
                             </div>
                         )}
                     </ul>

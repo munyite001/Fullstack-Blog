@@ -1,13 +1,26 @@
 import { useState, useEffect } from "react"
 import axios from 'axios';
 import { Editor } from '@tinymce/tinymce-react';
-import { json, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function CreatePost() {
 
-    const [tags, setTags] = useState(null)
+    const { postId } = useParams();
 
-    //  Fetch all tags
+    const [tags, setTags] = useState([]);
+    const [tagInput, setTagInput] = useState("");
+
+    const [postContent, setPostContent] = useState({
+        title: "",
+        content: "",
+        tags: [],
+        banner_image: null
+    });
+
+    const [mode, setMode] = useState("edit");
+
+    const navigate = useNavigate();
+
     useEffect(() => {
         const fetchTags = async () => {
             try {
@@ -20,57 +33,75 @@ export default function CreatePost() {
                         }
                     }
                 );
-                const tagsData = response.data
-                console.log('Tags: ', tagsData)
-                setTags(tagsData)
-
+                setTags(response.data);
             } catch (err) {
-                console.log("Error Fetching tags", err)
+                console.log("Error Fetching tags", err);
+            }
+        };
+        fetchTags();
+    }, []);
+
+    useEffect(() => {
+        const fetchPostData = async () => {
+            if (postId && tags.length > 0) {
+                try {
+                    const token = localStorage.getItem("token");
+                    const response = await axios.get(
+                        `http://localhost:3000/api/posts/${postId}`,
+                        {
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        }
+                    );
+
+                    const postData = response.data;
+
+                    setPostContent({
+                        title: postData.title,
+                        content: postData.content,
+                        tags: postData.tags,
+                        banner_image: postData.banner_image
+                    });
+
+                    const tagNames = postData.tags.map(tagId => {
+                        const tag = tags.find(t => t._id === tagId);
+                        return tag ? tag.name : '';
+                    }).join(', ');
+                    setTagInput(tagNames);
+                } catch (err) {
+                    console.log("Error fetching post data", err);
+                }
             }
         };
 
-        fetchTags();
-
-    }, [])
-
-    //  Post Content
-    const [postContent, setPostContent] = useState({
-        title: "",
-        content: "",
-        tags: [],
-        banner_image: null
-    })
-
-    //  Mode: Edit or Preview
-    const [mode, setMode] = useState("edit")
-
+        fetchPostData();
+    }, [postId, tags]);
 
     const handleModeChange = (mode) => {
-        setMode(mode)
-    }
+        setMode(mode);
+    };
 
-    
-    const navigate = useNavigate()
-
-
-    //  Functionality to upload images
     const handleImageUpload = (e) => {
-        const file = e.target.files[0]
+        const file = e.target.files[0];
 
         if (file) {
-            const reader = new FileReader()
+            const reader = new FileReader();
 
             reader.onload = () => {
-                setPostContent({...postContent, banner_image: reader.result})
-            }
+                setPostContent({ ...postContent, banner_image: reader.result });
+            };
 
-            reader.readAsDataURL(file)
+            reader.readAsDataURL(file);
         }
-    }
+    };
 
     const handleTagsChange = (e) => {
-        const inputTags = e.target.value.split(",").map(tag => tag.trim());
-        const tagIds = inputTags.map(tagName => {
+        const inputTags = e.target.value;
+        setTagInput(inputTags);
+
+        const inputTagArray = inputTags.split(",").map(tag => tag.trim());
+        const tagIds = inputTagArray.map(tagName => {
             const tag = tags.find(t => t.name === tagName);
             return tag ? tag._id : null;
         }).filter(tagId => tagId !== null);
@@ -78,10 +109,12 @@ export default function CreatePost() {
     };
 
     const handlePostSave = async () => {
+        if (postId) {
+            return handlePostUpdate();
+        }
         try {
             const token = localStorage.getItem("token");
-            console.log('Sending post data:', postContent);
-            const response = await axios.post(
+            await axios.post(
                 "http://localhost:3000/api/posts",
                 postContent,
                 {
@@ -90,21 +123,35 @@ export default function CreatePost() {
                     }
                 }
             );
-
-            console.log("Response: ", response)
-
-            //  Navigate to posts page
-            navigate('/posts')
-
+            navigate('/posts');
         } catch (err) {
-            console.log("Error saving post", err)
+            console.log("Error saving post", err);
         }
-    }
+    };
+
+    const handlePostUpdate = async () => {
+        try {
+            const token = localStorage.getItem("token");
+            await axios.put(
+                `http://localhost:3000/api/posts/${postId}`,
+                postContent,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }
+            );
+            navigate('/posts');
+        } catch (err) {
+            console.log("Error updating post", err);
+        }
+    };
+
     return (
         <div className="create-post-container">
             <div className="control-btns">
-                <button className={mode == "edit" ? "btn-2 active":"btn-2"} onClick={() => handleModeChange("edit")}>Edit</button>
-                <button className={mode == "preview" ? "btn-2 active":"btn-2"} onClick={() => handleModeChange("preview")}>Preview</button>
+                <button className={mode === "edit" ? "btn-2 active" : "btn-2"} onClick={() => handleModeChange("edit")}>Edit</button>
+                <button className={mode === "preview" ? "btn-2 active" : "btn-2"} onClick={() => handleModeChange("preview")}>Preview</button>
             </div>
             {mode === "edit" && 
                 <div className="edit-box">
@@ -127,30 +174,27 @@ export default function CreatePost() {
                             value={postContent.title} 
                             onChange={(e) => setPostContent({...postContent, title: e.target.value})}
                             placeholder="New Post Title Here"
-                            />
+                        />
                     </div>
                     <div className="input-box">
                         <input 
                             type="text" id="tags"
-                            value={postContent.tags.map(tagId => {
-                                const tag = tags.find(t => t._id === tagId);
-                                return tag ? tag.name : '';
-                            }).join(', ')}
+                            value={tagInput}
                             onChange={handleTagsChange}
                             placeholder="Add tags separated by commas"
                         />
                     </div>
                     <div className="input-box editor">
-                    <Editor
-                        apiKey='lfxzy4rw58a3mnx9kvpzo7px6136mzbk0chc3wm71g760o8w'
-                        init={{
-                            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate ai mentions tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
-                            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-                            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
-                        }}
-                        initialValue="Write your post content here..."
-                        value={postContent.content}
-                        onEditorChange={(content) => setPostContent({...postContent, content: content})}
+                        <Editor
+                            apiKey='lfxzy4rw58a3mnx9kvpzo7px6136mzbk0chc3wm71g760o8w'
+                            init={{
+                                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate ai mentions tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
+                                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+                                ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+                            }}
+                            initialValue={postContent.content}
+                            value={postContent.content}
+                            onEditorChange={(content) => setPostContent({ ...postContent, content: content })}
                         />
                     </div>
                     <div className="btns">
@@ -159,12 +203,9 @@ export default function CreatePost() {
                     </div>
                 </div>
             }
-            {
-                mode == "preview" &&
+            {mode === "preview" &&
                 <div className="preview-box">
-                    <div className="cover-image-box-preview" style={{ backgroundImage: `url(${postContent.banner_image})`, backgroundSize: 'cover', backgroundPosition: 'center', height: '200px' }}>
-                        {/* {postContent.banner_image && <img src={postContent.banner_image} alt="cover" />} */}
-                    </div>
+                    <div className="cover-image-box-preview" style={{ backgroundImage: `url(${postContent.banner_image})`, backgroundSize: 'cover', backgroundPosition: 'center', height: '200px' }}></div>
                     <h1>{postContent.title}</h1>
                     <div className="tags">
                         {postContent.tags.map((tagId, index) => {
@@ -172,9 +213,9 @@ export default function CreatePost() {
                             return tag ? <span key={index} className="tag-item">{tag.name}</span> : null;
                         })}
                     </div>
-                    <div dangerouslySetInnerHTML={{__html: postContent.content}} className="post-content-preview"></div>
+                    <div dangerouslySetInnerHTML={{ __html: postContent.content }} className="post-content-preview"></div>
                 </div>
             }
         </div>
-    )
+    );
 }

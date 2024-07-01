@@ -65,6 +65,7 @@ export default function App () {
             <Route path="/posts">
                 <Route index element={<Posts />} />
                 <Route path="create" element={<CreatePost />} />
+                <Route path="edit/:postId" element={<CreatePost />} />
             </Route>
             <Route path="/users" element={<Users />} />
           </Route>

@@ -121,7 +121,24 @@ body {
 
 .posts-list li {
     color: #3468a4;
+    margin: 1rem 0;
 }
+
+.post-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+@media (max-width: 768px) {
+    .post-item {
+        flex-direction: column;
+    }
+
+    .post-btns {
+        margin: 0.5rem 0 0;
+    }
+}
+
 
 .create-post-container {
     width: 100%;
