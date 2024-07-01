@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import ProtectedRoute from "./components/ProtectedRoute"
 import { Routes, Route, Link, useLocation, NavLink, useNavigate } from "react-router-dom"
-import jwtDecode from "jwt-decode"
+import { jwtDecode } from "jwt-decode"; 
 import DropDownMenu from "./components/DropDownMenu"
 import Posts from "./components/Posts"
 import Users from "./components/Users"
@@ -25,32 +25,17 @@ export default function App () {
       window.location.reload()
   }
 
-  //  Function to check if the token has expired
-  const isTokenExpired = () => {
-    const token = localStorage.getItem("token")
-    if (!token) {
-      return true;
-    }
-
-    const decodedToken = jwtDecode(token)
-    const currentTime = Date.now() / 1000   //  Convert the current time to seconds
-
-    //  Check if the token has expired
-    if (decodedToken.exp < currentTime) {
-      localStorage.removeItem("token")
-      return true;
-    }
-    
-    return false;
-  
-  };
-
-  //  Check if the token has expired
+  //  Log User Out after 1 hour
   useEffect(() => {
-    if (isTokenExpired) {
-      navigate("/login")
+    const token = localStorage.getItem("token")
+    if (token) {
+      const { exp } = jwtDecode(token)
+      const expirationTime = exp * 1000 - 60000
+      if (Date.now() >= expirationTime) {
+        handleLogout()
+      }
     }
-  }, [location, navigate])
+  }, [])
 
   return (
     <>
