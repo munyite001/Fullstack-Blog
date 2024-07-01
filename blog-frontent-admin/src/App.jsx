@@ -1,6 +1,7 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import ProtectedRoute from "./components/ProtectedRoute"
-import { Routes, Route, Link, useLocation, NavLink } from "react-router-dom"
+import { Routes, Route, Link, useLocation, NavLink, useNavigate } from "react-router-dom"
+import jwtDecode from "jwt-decode"
 import DropDownMenu from "./components/DropDownMenu"
 import Posts from "./components/Posts"
 import Users from "./components/Users"
@@ -11,6 +12,7 @@ import CreatePost from "./components/CreatePost"
 export default function App () {
 
   const location = useLocation()
+  const navigate = useNavigate()
 
   // Hide drop down menu paths
   const hideDropDownMenuPaths = ["/posts/create", "/login", "/signup"]
@@ -22,6 +24,33 @@ export default function App () {
       localStorage.removeItem("token");
       window.location.reload()
   }
+
+  //  Function to check if the token has expired
+  const isTokenExpired = () => {
+    const token = localStorage.getItem("token")
+    if (!token) {
+      return true;
+    }
+
+    const decodedToken = jwtDecode(token)
+    const currentTime = Date.now() / 1000   //  Convert the current time to seconds
+
+    //  Check if the token has expired
+    if (decodedToken.exp < currentTime) {
+      localStorage.removeItem("token")
+      return true;
+    }
+    
+    return false;
+  
+  };
+
+  //  Check if the token has expired
+  useEffect(() => {
+    if (isTokenExpired) {
+      navigate("/login")
+    }
+  }, [location, navigate])
 
   return (
     <>
