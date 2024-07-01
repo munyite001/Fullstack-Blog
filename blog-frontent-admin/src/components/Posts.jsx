@@ -39,6 +39,31 @@ export default function Posts() {
     const handleEdit = (id) => {
         navigate(`/posts/edit/${id}`)
     }
+
+    const handleDelete = (id) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this post?")
+        if (confirmDelete) {
+            const deletePost = async () => {
+                try {
+                    const token = localStorage.getItem("token")
+                    await axios.delete(
+                        `http://localhost:3000/api/posts/${id}`,
+                        {
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        }
+                    )
+
+                    setPosts(posts.filter(post => post._id !== id))
+                } catch (err) {
+                    console.log("Error deleting post: ", err)
+                }
+            }
+
+            deletePost()
+        }
+    }
     
     return (
         <>
@@ -55,7 +80,7 @@ export default function Posts() {
                                 <li>{post.title}</li>
                                 <div className="post-btns">
                                     <button className="btn-2" onClick={() => handleEdit(post._id)}>Edit</button>
-                                    <button className="btn-2">Delete</button>
+                                    <button className="btn-2" onClick={() => handleDelete(post._id)}>Delete</button>
                                 </div>
                             </div>
                         )}
