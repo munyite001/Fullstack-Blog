@@ -1,0 +1,25 @@
+Editor Plugins to remove
+
+checklist premium
+mediaembed premium
+casechange premium
+export premium
+formatpainter premium
+pageembed premium
+a11ychecker premium
+tinymcespellchecker premium
+permanentpen premium
+powerpaste premium
+advtable premium
+advcode premium
+editimage premium
+advtemplate premium
+ai premium
+mentions premium
+tableofcontents premium
+footnotes premium
+mergetags premium
+autocorrect premium
+typography premium
+inlinecss premium
+markdown premium
