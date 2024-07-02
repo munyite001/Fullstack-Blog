@@ -109,24 +109,40 @@ body {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-.posts-container {
+.posts-container, .users-container, .comments-container {
     margin: 1rem;
     background-color: white;
     padding: 1rem;
 }
 
-.posts-list {
+.posts-list, .users-list, .comments-list {
     margin: 1rem;
 }
 
-.posts-list li {
+.posts-list li, .users-list li, .comments-list li {
     color: #3468a4;
     margin: 1rem 0;
+}
+
+.user-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.user-details p {
+    color: #3468a4;
 }
 
 .post-item {
     display: flex;
     justify-content: space-between;
+}
+
+.no-data {
+    margin: 1rem;
+    font-style: italic;
+    color: rgba(0, 0, 0, 0.6);
 }
 
 @media (max-width: 768px) {

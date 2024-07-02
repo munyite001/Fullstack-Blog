@@ -7,6 +7,7 @@ import Posts from "./components/Posts"
 import Users from "./components/Users"
 import Login from "./components/Login"
 import SignUp from "./components/signup"
+import Comments from "./components/Comments"
 import CreatePost from "./components/CreatePost"
 
 export default function App () {
@@ -82,6 +83,7 @@ export default function App () {
                 <Route path="edit/:postId" element={<CreatePost />} />
             </Route>
             <Route path="/users" element={<Users />} />
+            <Route path="/comments" element={<Comments />} />
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
