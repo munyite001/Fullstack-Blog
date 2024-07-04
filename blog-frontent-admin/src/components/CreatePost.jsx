@@ -161,7 +161,6 @@ export default function CreatePost() {
                         }
                     }
                 );
-                console.log("Post Content Published", postContent)
                 navigate('/posts');
             } catch (err) {
                 console.log("Error publishing post", err);
@@ -183,6 +182,27 @@ export default function CreatePost() {
                 console.log("Error publishing post", err);
             }
         }
+    }
+
+    const handleFeatured = async () => {
+        
+        try {
+            const token = localStorage.getItem("token")
+            await axios.put(
+                `http://localhost:3000/api/posts/${postId}/feature`,
+                {},
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }
+            );
+            navigate('/posts');
+        } catch(err) {
+            console.log("Error setting the post to featured", err)
+        }
+
+
     }
 
     return (
@@ -238,6 +258,7 @@ export default function CreatePost() {
                     <div className="btns">
                         <button className="btn" onClick={handlePostSave}>Save Draft</button>
                         <button className="btn" onClick={handlePublish}>Publish</button>
+                        {postId && <button className="btn" onClick={handleFeatured}>Set Featured</button>}
                     </div>
                 </div>
             }

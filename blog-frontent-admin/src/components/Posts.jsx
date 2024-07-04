@@ -77,7 +77,7 @@ export default function Posts() {
                     <ul className="posts-list">
                         {posts.map((post) => 
                             <div className="post-item" key={post._id}>
-                                <li>{post.title} ({post.published ? "Published" : "Not Published"})</li>
+                                <li>{post.title} ({post.published ? "Published" : "Not Published"}) {post.featured ? "(featured)": ""}</li>
                                 <div className="post-btns">
                                     <button className="btn-2" onClick={() => handleEdit(post._id)}>Edit</button>
                                     <button className="btn-2" onClick={() => handleDelete(post._id)}>Delete</button>
