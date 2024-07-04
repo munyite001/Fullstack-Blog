@@ -262,8 +262,22 @@ span.remove {
     font-size: 50px;
 }
 
+.preview-box {
+    width: 80%;
+    margin: 0 auto;
+}
+
 .preview-box .post-content-preview {
     margin: 2rem 0;
+    padding: 1rem auto;
+}
+
+.post-content-preview p {
+    margin: 1rem 0;
+}
+
+.post-content-preview ul, .post-content-preview ol {
+    margin: 1rem 2rem;
 }
 
 .tags {
