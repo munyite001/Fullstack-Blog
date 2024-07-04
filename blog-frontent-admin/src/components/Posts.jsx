@@ -67,7 +67,7 @@ export default function Posts() {
     
     return (
         <>
-            <Stats/>
+            <Stats />
             <div className="posts-container">
                 <h2>Posts</h2>
                 {loading && 
