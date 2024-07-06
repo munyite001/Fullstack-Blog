@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { NavLink } from "react-router-dom"
-import logo from "../../public/logo.png"
+import logo from "/logo.png"
 export default function Navbar() {
 
     const [mobileWidth, setMobileWidth] = useState(window.innerWidth <= 768)
@@ -41,19 +41,48 @@ export default function Navbar() {
                     <i className="fas fa-times close-btn" onClick={handleMobileMenu}></i>
                 </div>
                 <ul className="mobile-nav-links">
-                    <li>
-                        <NavLink to="/Home">Home</NavLink>
+                    <li className="nav-link" onClick={handleMobileMenu}>
+                        <NavLink to="/">Home</NavLink>
                     </li>
-                    <li>
+                    <li className="nav-link" onClick={handleMobileMenu}>
                         <NavLink to="/articles">Articles</NavLink>
                     </li>
-                    <li className="social">
-                        <i className="fa fa-linkedin-square"></i>
-                        <i className="fa"></i>
-                        <i></i>
+                    <li className="social" onClick={handleMobileMenu}>
+                        <i>x</i>
+                        <i>x</i>
+                    </li>
+                    <li className="auth">
+                        <button className="btn">Login</button>
+                        <button className="btn">Signup</button>
                     </li>
                 </ul>
             </div>
+            {!mobileWidth && 
+                <div className="desktop-nav">
+                    <div className="logo-container">
+                        <div className="logo">
+                            <img src={logo} alt="logo" />
+                        </div>
+                        <p>ByteSavvy</p>
+                    </div>
+                    <ul className="desktop-nav-links">
+                        <li className="nav-link">
+                            <NavLink to="/">Home</NavLink>
+                        </li>
+                        <li className="nav-link">
+                            <NavLink to="/articles">Articles</NavLink>
+                        </li>
+                        <li className="social">
+                            <i>x</i>
+                            <i>x</i>
+                        </li>
+                        <li className="auth">
+                            <button className="btn">Login</button>
+                            <button className="btn">Signup</button>
+                        </li>
+                    </ul>
+                </div>
+            }
         </nav>
     )
 }

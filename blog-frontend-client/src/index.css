@@ -41,7 +41,14 @@ body {
   justify-content: space-between;
 }
 
-.mobile-nav .logo-container {
+.desktop-nav {
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-container {
   display: flex;
   align-items: center;
 }
@@ -103,6 +110,13 @@ body {
   align-items: center;
 }
 
+.desktop-nav-links {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  margin: 0 1rem;
+}
+
 .mobile-nav-links li {
   width: 100%;
   display: flex;
@@ -110,3 +124,59 @@ body {
   justify-content: center;
   margin: 1rem;
 }
+
+.desktop-nav-links li {
+  margin: 0 1rem;
+}
+
+.mobile-nav-links li:nth-child(1) {
+  margin: 0;
+}
+
+.mobile-nav-links .nav-link:hover, .mobile-nav-links .nav-link:active {
+  color: #f55e18;
+}
+
+.desktop-nav-links .nav-link:hover, .desktop-nav-links .nav-link:active {
+  color: #f55e18;
+}
+
+.mobile-nav-links li.social {
+  margin: 0;
+}
+
+.desktop-nav-links li.social i {
+  margin: 0 0.5rem;
+}
+
+.mobile-nav-links li.social i {
+  margin: 0 0.5rem;
+}
+
+.mobile-nav-links li.auth {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-nav-links li.auth .btn {
+  margin: 0.5rem auto;
+}
+
+.desktop-nav-links li.auth .btn {
+  margin: 0 0.5rem;
+}
+
+.btn {
+  padding: 0.5rem;
+  border-radius: 10px;
+  border: 1px solid #f55e18;
+  color: #f55e18;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #f55e18;
+  color: white;
+}
+
