@@ -67,10 +67,10 @@ export default function Navbar() {
                     </div>
                     <ul className="desktop-nav-links">
                         <li className="nav-link">
-                            <NavLink to="/">Home</NavLink>
+                            <NavLink style={({isActive}) => ({ color: isActive ? "#f55e18" : "black" })}  to="/">Home</NavLink>
                         </li>
                         <li className="nav-link">
-                            <NavLink to="/articles">Articles</NavLink>
+                            <NavLink style={({ isActive }) => ({ color: isActive ? "#f55e18" : "black" })} to="/articles">Articles</NavLink>
                         </li>
                         <li className="social">
                             <i>x</i>

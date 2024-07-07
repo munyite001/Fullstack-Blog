@@ -212,7 +212,6 @@ body {
 
 .home .posts .featured-post {
   width: 80%;
-  max-width: 700px;
   margin: 1rem auto;
   border-radius: 15px;
   position: relative;
@@ -237,6 +236,7 @@ body {
   left: 1rem;
   right: 1rem;
   padding: 1rem;
+  max-width: 500px;
   border-radius: 10px;
   background-color: white;
 }
