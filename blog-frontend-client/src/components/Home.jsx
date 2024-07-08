@@ -65,10 +65,10 @@ export default function App() {
                                     {post.tags.map((tag) => <li key={tag._id}>{tag.name}</li>)}
                                 </ul>
                                 <div className="title">
-                                    <h4>{featured.title}</h4>
+                                    <h4>{post.title}</h4>
                                 </div>
                                 <div className="date">
-                                    <p>{format(featured.date_published, "PPpp")}</p>
+                                    <p>{format(post.date_published, "PPpp")}</p>
                                 </div>
 
                             </div>

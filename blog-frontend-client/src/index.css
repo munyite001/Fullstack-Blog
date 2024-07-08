@@ -67,6 +67,13 @@ body {
   margin: 0 0.5rem;
 }
 
+.no-data {
+  font-style: italic;
+  font-weight: 400;
+  opacity: 0.7;
+  font-size: 14px;
+}
+
 .open-menu {
   color: #f55e18;
   cursor: pointer;
@@ -223,10 +230,13 @@ body {
 
 .featured-post .image-banner {
   width: 100%;
+  height: 25rem;
 }
 
 .featured-post .image-banner img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 15px;
 }
 
@@ -272,13 +282,28 @@ body {
   flex-wrap: wrap;
 }
 
+@media (max-width: 768px) {
+  .featured-post .title h2 {
+    font-size: 18px;
+  }
+
+  .featured-post .post-tags li {
+    font-size: 12px;
+  }
+
+  .post-grid {
+    width: 90%;
+  }
+}
+
 .post-grid h2 {
   margin: 1rem auto;
 }
 
 .post-grid .post-item {
-  width: 80%;
-  max-width: 300px;
+  width: 100%;
+  max-width: 270px;
+  height: 350px;
   margin: 1rem auto;
   padding: 0.5rem;
   border-radius: 10px;
@@ -287,11 +312,14 @@ body {
 
 .post-item .post-image {
   width: 100%;
-  margin: 0 0 1rem 0;
+  height: 50%;
+  margin: 0 0 2rem 0;
 }
 
 .post-item .post-image img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 10px;
 }
 
@@ -309,4 +337,17 @@ body {
 .post-item .date p {
   font-style: italic;
   font-size: 10px;
+}
+
+/* POSTS PAGE */
+.articles {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.articles .posts {
+  margin: 1rem auto;
 }
