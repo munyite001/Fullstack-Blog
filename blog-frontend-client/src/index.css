@@ -95,6 +95,7 @@ body {
 
 .show-mobile-menu {
   transform: translateY(0);
+  z-index: 1000;
 }
 
 .mobile-menu .control {
@@ -154,10 +155,17 @@ body {
 
 .desktop-nav-links li.social i {
   margin: 0 0.5rem;
+  font-size: 20px;
 }
 
 .mobile-nav-links li.social i {
   margin: 0 0.5rem;
+  font-size: 20px;
+}
+
+.desktop-nav-links li.social i:hover, .mobile-nav-links li.social i:hover {
+  color: #f55e18;
+  cursor: pointer;
 }
 
 .mobile-nav-links li.auth {

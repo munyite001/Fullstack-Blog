@@ -48,8 +48,8 @@ export default function Navbar() {
                         <NavLink to="/articles">Articles</NavLink>
                     </li>
                     <li className="social" onClick={handleMobileMenu}>
-                        <i>x</i>
-                        <i>x</i>
+                        <i class='bx bxl-github'></i>
+                        <i class='bx bxl-linkedin-square' ></i>
                     </li>
                     <li className="auth">
                         <button className="btn">Login</button>
@@ -73,8 +73,8 @@ export default function Navbar() {
                             <NavLink style={({ isActive }) => ({ color: isActive ? "#f55e18" : "black" })} to="/articles">Articles</NavLink>
                         </li>
                         <li className="social">
-                            <i>x</i>
-                            <i>x</i>
+                            <i class='bx bxl-github'></i>
+                            <i class='bx bxl-linkedin-square' ></i>
                         </li>
                         <li className="auth">
                             <button className="btn">Login</button>
