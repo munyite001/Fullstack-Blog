@@ -102,7 +102,7 @@ export default function Navbar() {
                                 </button>
                             </li> :
                             <li className="auth">
-                                <button className="btn">Logout</button>
+                                <button className="btn" onClick={handleLogout}>Logout</button>
                             </li>
                         }
                     </ul>
