@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
-import { NavLink } from "react-router-dom"
+import { NavLink, Link } from "react-router-dom"
 import logo from "/logo.png"
 export default function Navbar() {
 
     const [mobileWidth, setMobileWidth] = useState(window.innerWidth <= 768)
     const [showMobileMenu, setShowMobileMenu] = useState(false)
+    
+    const token = localStorage.getItem("token")
 
     //  Handle Window Resize
     useEffect(() => {
@@ -22,6 +24,11 @@ export default function Navbar() {
 
     const handleMobileMenu = () => {
         setShowMobileMenu(!showMobileMenu)
+    }
+
+    const handleLogout = () => {
+        localStorage.removeItem("token")
+        window.location.reload()
     }
 
     return (
@@ -51,10 +58,19 @@ export default function Navbar() {
                         <i className='bx bxl-github'></i>
                         <i className='bx bxl-linkedin-square' ></i>
                     </li>
-                    <li className="auth">
-                        <button className="btn">Login</button>
-                        <button className="btn">Signup</button>
-                    </li>
+                    {!token ? 
+                        <li className="auth">
+                            <button className="btn">
+                                <Link to="/login">Login</Link>
+                            </button>
+                            <button className="btn">
+                                <Link to="/signup">Sign Up</Link>
+                            </button>
+                        </li> :
+                        <li className="auth">
+                            <button className="btn">Logout</button>
+                        </li>
+                    }
                 </ul>
             </div>
             {!mobileWidth && 
@@ -76,10 +92,19 @@ export default function Navbar() {
                             <i className='bx bxl-github'></i>
                             <i className='bx bxl-linkedin-square' ></i>
                         </li>
-                        <li className="auth">
-                            <button className="btn">Login</button>
-                            <button className="btn">Signup</button>
-                        </li>
+                        {!token ? 
+                            <li className="auth">
+                                <button className="btn">
+                                    <Link to="/login">Login</Link>
+                                </button>
+                                <button className="btn">
+                                    <Link to="/signup">Sign Up</Link>
+                                </button>
+                            </li> :
+                            <li className="auth">
+                                <button className="btn">Logout</button>
+                            </li>
+                        }
                     </ul>
                 </div>
             }

@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 
 export default function Posts() {
 
     const [posts, setPosts] = useState(null)
+    
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -21,6 +24,11 @@ export default function Posts() {
         fetchPosts()
     }, [])
 
+
+    const handlePostClick = (id) =>  {
+        navigate(`/articles/${id}`)
+    }
+
     return (
         <div className='articles'>
             <h1 className="heading">Articles</h1>
@@ -28,7 +36,7 @@ export default function Posts() {
                 { posts && 
                     <div className="post-grid">
                         {posts.map((post) => 
-                            <div className="post-item post" key={post._id}>
+                            <div className="post-item post" key={post._id} onClick={() => handlePostClick(post._id)}>
                                 <div className="post-image">
                                     <img src={post.banner_image} alt="Post Image" />
                                 </div>
