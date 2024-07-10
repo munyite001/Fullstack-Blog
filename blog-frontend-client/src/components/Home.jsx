@@ -1,15 +1,17 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
+import ViewPost from "./ViewPost";
 
 export default function App() {
 
     const [ posts, setPosts ] = useState(null)
     const [ featured, setFeatured ] = useState(null)
 
-    //  Fetch all the posts
-    //  Store the featured post in a variable
-    //  Design the home layout with each post
+    const navigate = useNavigate();
+
+
     useEffect(() => {
         const fetchPosts = async () => {
             try {
@@ -27,8 +29,7 @@ export default function App() {
     }, [])
 
     const handlePostClick = (id) =>  {
-        //  Do something
-        console.log("Post Clicked", id)
+        navigate(`/articles/${id}`)
     }
 
     return (
@@ -57,7 +58,7 @@ export default function App() {
                 { posts && 
                     <div className="post-grid">
                         {posts.map((post) => 
-                            <div className="post-item post" key={post._id}>
+                            <div className="post-item post" key={post._id} onClick={() => {handlePostClick(post._id)}}>
                                 <div className="post-image">
                                     <img src={post.banner_image} alt="Post Image" />
                                 </div>
