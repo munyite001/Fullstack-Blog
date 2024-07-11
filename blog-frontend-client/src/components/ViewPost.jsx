@@ -102,7 +102,7 @@ export default function ViewPost() {
                                         </div>
                                         <p className="comment-content">{comment.content}</p>
                                     </div>
-                                )) : <p>No comments yet</p>}
+                                )) : <p className="no-data" style={{ margin: "1rem"}}>No comments yet</p>}
                             </div>
                         </div>
                     ) : (

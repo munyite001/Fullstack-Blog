@@ -55,8 +55,12 @@ export default function Navbar() {
                         <NavLink to="/articles">Articles</NavLink>
                     </li>
                     <li className="social" onClick={handleMobileMenu}>
-                        <i className='bx bxl-github'></i>
-                        <i className='bx bxl-linkedin-square' ></i>
+                        <a href="https://github.com/munyite001" target="_blank">
+                            <i className='bx bxl-github'></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/munyite/" target="_blank">
+                            <i className='bx bxl-linkedin-square' ></i>
+                        </a>
                     </li>
                     {!token ? 
                         <li className="auth">
@@ -89,8 +93,12 @@ export default function Navbar() {
                             <NavLink style={({ isActive }) => ({ color: isActive ? "#f55e18" : "black" })} to="/articles">Articles</NavLink>
                         </li>
                         <li className="social">
-                            <i className='bx bxl-github'></i>
-                            <i className='bx bxl-linkedin-square' ></i>
+                            <a href="https://github.com/munyite001" target="_blank">
+                                <i className='bx bxl-github'></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/munyite/" target="_blank">
+                                <i className='bx bxl-linkedin-square' ></i>
+                            </a>
                         </li>
                         {!token ? 
                             <li className="auth">
