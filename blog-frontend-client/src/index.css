@@ -424,7 +424,9 @@ body {
 
 .view-post-item .post-info {
   width: 100%;
+  margin: 0.5rem 0;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
 }
@@ -498,4 +500,70 @@ body {
 
 .error {
   color: red;
+}
+
+/* Comments */
+.comment-box {
+  width: 100%;
+}
+
+.comment-box h2 {
+  margin: 0.5rem 0;
+}
+
+.comment-box hr {
+  height: 0.15rem;
+  background-color: #f55e18;
+}
+
+.user-comment {
+  width: 80%;
+  margin: 1rem auto;
+  
+}
+
+.user-comment textarea {
+  width: 100%;
+  padding: 1rem;
+  position: relative;
+}
+
+.user-comment button {
+  padding: 0.5rem;
+  border-radius: 10px;
+  border: 1px solid #f55e18;
+  color: #f55e18;
+  background-color: transparent;
+  cursor: pointer;
+  margin: 1rem 0; 
+}
+
+.comment-list {
+  width: 80%;
+  margin: 1rem auto;
+}
+
+.comment { 
+  width: 80%;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.comment .comment-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.comment-info .comment-date {
+  font-size: 12px;
+  font-style: italic;
+}
+
+.comment .comment-author {
+  color: #f55e18;
+  font-size: 12px;
+  margin: 0 0 1rem;
 }

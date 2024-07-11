@@ -60,15 +60,15 @@ export default function Navbar() {
                     </li>
                     {!token ? 
                         <li className="auth">
-                            <button className="btn">
+                            <button className="btn" onClick={handleMobileMenu}>
                                 <Link to="/login">Login</Link>
                             </button>
-                            <button className="btn">
+                            <button className="btn" onClick={handleMobileMenu}>
                                 <Link to="/signup">Sign Up</Link>
                             </button>
                         </li> :
                         <li className="auth">
-                            <button className="btn">Logout</button>
+                            <button className="btn" onClick={handleLogout}>Logout</button>
                         </li>
                     }
                 </ul>

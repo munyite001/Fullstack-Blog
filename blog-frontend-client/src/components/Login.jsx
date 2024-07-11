@@ -28,6 +28,7 @@ export default function Login() {
 
             //  Redirect to the dashboard
             navigate('/')
+            window.location.reload()
         } catch (err) {
             if (err.response && err.response.status == 400) {
                 setError("Invalid Credentials")
