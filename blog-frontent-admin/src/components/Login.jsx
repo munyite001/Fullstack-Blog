@@ -23,6 +23,10 @@ export default function Login() {
             //  Save the token to local storage
             localStorage.setItem("token", token)
 
+            setTimeout(() => {
+                localStorage.removeItem("token")
+            }, 3600000)
+
             //  Redirect to the dashboard
             navigate('/posts')
         } catch (err) {
