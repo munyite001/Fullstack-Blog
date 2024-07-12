@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Editor } from '@tinymce/tinymce-react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 export default function CreatePost() {
 
     const { postId } = useParams();
@@ -27,7 +29,7 @@ export default function CreatePost() {
             try {
                 const token = localStorage.getItem("token");
                 const response = await axios.get(
-                    "http://localhost:3000/api/tags",
+                    `${backendUrl}/tags`,
                     {
                         headers: {
                             'Authorization': `Bearer ${token}`
@@ -48,7 +50,7 @@ export default function CreatePost() {
                 try {
                     const token = localStorage.getItem("token");
                     const response = await axios.get(
-                        `http://localhost:3000/api/posts/${postId}`,
+                        `${backendUrl}/posts/${postId}`,
                         {
                             headers: {
                                 'Authorization': `Bearer ${token}`
@@ -116,7 +118,7 @@ export default function CreatePost() {
         try {
             const token = localStorage.getItem("token");
             await axios.post(
-                "http://localhost:3000/api/posts",
+                `${backendUrl}/posts`,
                 postContent,
                 {
                     headers: {
@@ -134,7 +136,7 @@ export default function CreatePost() {
         try {
             const token = localStorage.getItem("token");
             await axios.put(
-                `http://localhost:3000/api/posts/${postId}`,
+                `${backendUrl}/posts/${postId}`,
                 postContent,
                 {
                     headers: {
@@ -153,7 +155,7 @@ export default function CreatePost() {
             try {
                 const token = localStorage.getItem("token");
                 await axios.put(
-                    `http://localhost:3000/api/posts/${postId}`,
+                    `${backendUrl}/posts/${postId}`,
                     { ...postContent, published: true },
                     {
                         headers: {
@@ -169,7 +171,7 @@ export default function CreatePost() {
             try {
                 const token = localStorage.getItem("token")
                 await axios.post(
-                    "http://localhost:3000/api/posts",
+                    `${backendUrl}/posts`,
                     {...postContent, published: true},
                     {
                         headers: {
@@ -189,7 +191,7 @@ export default function CreatePost() {
         try {
             const token = localStorage.getItem("token")
             await axios.put(
-                `http://localhost:3000/api/posts/${postId}/feature`,
+                `${backendUrl}/posts/${postId}/feature`,
                 {},
                 {
                     headers: {

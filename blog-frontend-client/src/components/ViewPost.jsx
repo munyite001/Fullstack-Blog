@@ -4,6 +4,8 @@ import axios from "axios";
 import { format } from "date-fns";
 import { sanitizeHtml } from "../utils/utils";
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL
+
 
 export default function ViewPost() {
 
@@ -22,7 +24,7 @@ export default function ViewPost() {
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/api/posts/${postId}`);
+                const response = await axios.get(`${backendUrl}/posts/${postId}`);
                 setPost(response.data)
             } catch(err) {
                 console.log(err)
@@ -39,7 +41,7 @@ export default function ViewPost() {
     useEffect(() => {
         const fetchAllPostComments = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/api/posts/${postId}/comments`);
+                const response = await axios.get(`${backendUrl}/posts/${postId}/comments`);
                 setPostComments(response.data)
             } catch(err) {
                 console.log(err)
@@ -50,7 +52,7 @@ export default function ViewPost() {
 
 
     const handleSubmitComment = async () => {
-        await axios.post(`http://localhost:3000/api/posts/${postId}/comment`, {content: comment}, {
+        await axios.post(`${backendUrl}/posts/${postId}/comment`, {content: comment}, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

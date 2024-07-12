@@ -2,6 +2,8 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { format } from "date-fns"
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL
+
 export default function Comments() {
     const [comments, setComments] = useState(null)
     const [loading, setLoading] = useState(false)
@@ -12,14 +14,14 @@ export default function Comments() {
             try {
                 const token = localStorage.getItem("token");
                 const response = await axios.get(
-                    "http://localhost:3000/api/comments",
+                    `${backendUrl}/comments`,
                     {
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }
                     }
                 );
-                setComments(response.date)
+                setComments(response.data)
                 setLoading(false)
             } catch(err) {
                 console.log("Error Fetching Comments")
@@ -32,13 +34,15 @@ export default function Comments() {
     return (
         <div className="comments-container">
             <h2>Comments</h2>
+            {console.log(comments)}
             {loading && <p>Loading...</p>}
             {comments && 
                 <ul className="comments-list">
                     {comments.map((comment) => 
-                        <div className="comment-box">
-                            <li>{comment.content}</li>
-                        </div>
+                        <li className="comment-box">
+                            <div>{comment.content}</div>
+                            <div>{comment.user.username}</div>
+                        </li>
                     )}
                 </ul>
             }

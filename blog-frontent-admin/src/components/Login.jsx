@@ -2,6 +2,8 @@ import { useState } from "react"
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL
+
 export default function Login() {
 
     const API_URL = JSON.stringify(import.meta.env["VITE_BACKEND_URL"])
@@ -17,7 +19,7 @@ export default function Login() {
         e.preventDefault();
 
         try {
-            const response = await axios.post(`http://localhost:3000/api/admin/login`, user)
+            const response = await axios.post(`${backendUrl}/admin/login`, user)
             const { token } = response.data
 
             //  Save the token to local storage

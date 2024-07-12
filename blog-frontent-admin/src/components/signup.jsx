@@ -3,6 +3,8 @@ import { useState } from "react"
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL
+
 export default function SignUp() {
     const [user, setUser] = useState({
         username: "",
@@ -17,7 +19,7 @@ export default function SignUp() {
         e.preventDefault();
 
         try {
-            const response = await axios.post(`http://localhost:3000/api/users/register`, user)
+            const response = await axios.post(`${backendUrl}/users/register`, user)
 
             //  Redirect to the dashboard
             navigate('/login')

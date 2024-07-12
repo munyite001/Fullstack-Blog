@@ -2,6 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { format } from 'date-fns';
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL
 
 export default function Users() {
     const [users, setUsers] = useState(null)
@@ -13,7 +14,7 @@ export default function Users() {
             try {
                 const token = localStorage.getItem("token");
                 const response = await axios.get(
-                    "http://localhost:3000/api/users", 
+                    `${backendUrl}/users`, 
                     {
                         headers: {
                             "Authorization": `Bearer ${token}`

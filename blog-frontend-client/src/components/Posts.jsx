@@ -3,6 +3,8 @@ import axios from "axios";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL
+
 export default function Posts() {
 
     const [posts, setPosts] = useState(null)
@@ -13,7 +15,7 @@ export default function Posts() {
         const fetchPosts = async () => {
             try {
                 const response = await axios.get(
-                    "http://localhost:3000/api/posts/published"
+                    `${backendUrl}/posts/published`
                 );
                 setPosts(response.data);
 

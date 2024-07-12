@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL
+
 const Stats = () => {
     const [stats, setStats] = useState({});
     const [loading, setLoading] = useState(true); // Add loading state
@@ -10,7 +12,7 @@ const Stats = () => {
             try {
                 const token = localStorage.getItem("token");
                 const response = await axios.get(
-                    "http://localhost:3000/api/stats",
+                    `${backendUrl}/stats`,
                     {
                         headers: {
                             'Authorization': `Bearer ${token}`

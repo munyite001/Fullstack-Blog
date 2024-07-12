@@ -2,7 +2,8 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import ViewPost from "./ViewPost";
+
+const backendUrl = import.meta.env.VITE_BACKEND_URL
 
 export default function App() {
 
@@ -11,12 +12,11 @@ export default function App() {
 
     const navigate = useNavigate();
 
-
     useEffect(() => {
         const fetchPosts = async () => {
             try {
                 const response = await axios.get(
-                    "http://localhost:3000/api/posts/published"
+                    `${backendUrl}/posts/published`
                 );
                 setPosts(response.data);
                 setFeatured(response.data.find((post) => post.featured == true))

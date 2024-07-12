@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios"
 import Stats from "./Stats"
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL
+
 export default function Posts() {
     
     const [posts, setPosts] = useState(null)
@@ -17,7 +19,7 @@ export default function Posts() {
             try {
                 const token = localStorage.getItem("token");
                 const response = await axios.get(
-                    "http://localhost:3000/api/posts",
+                    `${backendUrl}/posts`,
                     {
                         headers: {
                             'Authorization': `Bearer ${token}`
@@ -47,7 +49,7 @@ export default function Posts() {
                 try {
                     const token = localStorage.getItem("token")
                     await axios.delete(
-                        `http://localhost:3000/api/posts/${id}`,
+                        `${backendUrl}/posts/${id}`,
                         {
                             headers: {
                                 'Authorization': `Bearer ${token}`

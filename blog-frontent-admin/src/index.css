@@ -16,6 +16,8 @@ html, body, .root {
     min-height: 100vh;
 }
 
+
+
 body {
     font-family: "Roboto", sans-serif;
     overflow-x: hidden;
@@ -122,6 +124,11 @@ body {
 .posts-list li, .users-list li, .comments-list li {
     color: #3468a4;
     margin: 1rem 0;
+}
+
+.comment-box {
+    display: flex;
+    justify-content: space-between;
 }
 
 .user-item {
