@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import LoadingScreen from "./LoadingScreen";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL
 
@@ -9,6 +10,8 @@ export default function App() {
 
     const [ posts, setPosts ] = useState(null)
     const [ featured, setFeatured ] = useState(null)
+
+    const [loading, setLoading] = useState(true)
 
     const navigate = useNavigate();
 
@@ -20,9 +23,11 @@ export default function App() {
                 );
                 setPosts(response.data);
                 setFeatured(response.data.find((post) => post.featured == true))
+                setLoading(false)
 
             } catch(err) {
                 console.log(`Error Fetching posts ${err}`)
+                setLoading(false)
             }
         }
         fetchPosts()
@@ -35,6 +40,8 @@ export default function App() {
     return (
         <div className='home'>
             <h1 className="heading">Home</h1>
+            {loading && <LoadingScreen />}
+            {console.log(`Backend Url server: ${backendUrl}`)}
             <div className="posts">
                 {posts && 
                     <div className="featured-post post" onClick={() => {handlePostClick(featured._id)}}>
@@ -55,6 +62,7 @@ export default function App() {
                     </div>
                 }
                 <h2 className="heading">Latest posts</h2>
+                {loading && <LoadingScreen />}
                 { posts && 
                     <div className="post-grid">
                         {posts.map((post) => 
@@ -76,7 +84,7 @@ export default function App() {
                         )}
                     </div>
                 }
-                {!posts && <p className="no-data">There are no posts</p>}
+                {!posts && !loading && <p className="no-data">There are no posts</p>}
             </div>
         </div>
     )

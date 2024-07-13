@@ -3,6 +3,7 @@ import { useEffect,useState } from "react";
 import axios from "axios";
 import { format } from "date-fns";
 import { sanitizeHtml } from "../utils/utils";
+import LoadingScreen from "./LoadingScreen";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL
 
@@ -20,14 +21,17 @@ export default function ViewPost() {
 
     const [postComments, setPostComments] = useState(null)
 
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const fetchPost = async () => {
             try {
                 const response = await axios.get(`${backendUrl}/posts/${postId}`);
                 setPost(response.data)
+                setLoading(false)
             } catch(err) {
                 console.log(err)
+                setLoading(false)
             }
         }
         fetchPost()
@@ -66,7 +70,7 @@ export default function ViewPost() {
 
     return (
         <div className="post-box">
-            {console.log(postId)}
+            {loading && <LoadingScreen />}
             {post ? (
                 <div className="view-post-item">
                     <div className="post-image">
@@ -94,26 +98,26 @@ export default function ViewPost() {
                                 <textarea placeholder="Add a comment" onChange={handleCommentInput} value={comment}></textarea>
                                 <button onClick={handleSubmitComment}>Submit</button>
                             </div>
-                            <div className="comment-list">
-                                <h3>Community Comments</h3>
-                                {postComments.length > 0 ?  postComments.map((comment) => (
-                                    <div key={comment._id} className="comment">
-                                        <div className="comment-info">
-                                            <p className="comment-author">{comment.user.username}</p>
-                                            <p className="comment-date">{format(comment.updated_at, "PP")}</p>
-                                        </div>
-                                        <p className="comment-content">{comment.content}</p>
-                                    </div>
-                                )) : <p className="no-data" style={{ margin: "1rem"}}>No comments yet</p>}
-                            </div>
                         </div>
                     ) : (
                         <div className="no-comment">
                             <p className="no-data">You have to be logged in before you can add a comment</p>
                         </div>
                     ) }
+                    <div className="comment-list">
+                        <h3>Community Comments</h3>
+                        {postComments.length > 0 ?  postComments.map((comment) => (
+                            <div key={comment._id} className="comment">
+                                <div className="comment-info">
+                                    <p className="comment-author">{comment.user.username}</p>
+                                    <p className="comment-date">{format(comment.updated_at, "PP")}</p>
+                                </div>
+                                <p className="comment-content">{comment.content}</p>
+                            </div>
+                        )) : <p className="no-data" style={{ margin: "1rem"}}>No comments yet</p>}
+                    </div>
                 </div>
-        ): (<p className="no-data">Sorry this post doesn't exist</p>)}
+        ): (loading ? '' : <p className="no-data">No post found</p>)}
         </div>
     )
 }

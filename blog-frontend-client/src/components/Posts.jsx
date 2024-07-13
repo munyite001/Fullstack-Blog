@@ -2,13 +2,17 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import LoadingScreen from "./LoadingScreen";
+import { se } from "date-fns/locale";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL
 
 export default function Posts() {
 
     const [posts, setPosts] = useState(null)
-    
+
+    const [loading, setLoading] = useState(true)
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -18,9 +22,11 @@ export default function Posts() {
                     `${backendUrl}/posts/published`
                 );
                 setPosts(response.data);
+                setLoading(false)
 
             } catch(err) {
                 console.log(`Error Fetching posts ${err}`)
+                setLoading(false)
             }
         }
         fetchPosts()
@@ -35,6 +41,7 @@ export default function Posts() {
         <div className='articles'>
             <h1 className="heading">Articles</h1>
             <div className="posts">
+                {loading && <LoadingScreen />}
                 { posts && 
                     <div className="post-grid">
                         {posts.map((post) => 
@@ -56,7 +63,7 @@ export default function Posts() {
                         )}
                     </div>
                 }
-                {!posts && <p className="no-data">There are no posts</p>}
+                {!posts && !loading && <p className="no-data">There are no posts</p>}
             </div>
         </div>
     )
