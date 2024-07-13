@@ -49,6 +49,8 @@ This is a full-stack blog application built using the MERN stack (MongoDB, Expre
 Make sure you have the following installed:
 
 - Node.js
+- Express
+- React
 - npm
 - MongoDB
 
